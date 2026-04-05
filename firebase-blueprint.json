@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "users": {
+      "title": "User Profile",
+      "description": "Stores user profile information and settings.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique user ID from Firebase Auth" },
+        "displayName": { "type": "string", "description": "User's display name" },
+        "email": { "type": "string", "format": "email", "description": "User's email address" },
+        "photoURL": { "type": "string", "description": "User's profile picture URL" },
+        "bestScore": { "type": "integer", "description": "User's highest quiz score" },
+        "lastActive": { "type": "string", "format": "date-time", "description": "Last time the user was active" }
+      },
+      "required": ["uid", "displayName"]
+    },
+    "history": {
+      "title": "Quiz History Entry",
+      "description": "A single record of a completed quiz attempt.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique ID for the attempt" },
+        "uid": { "type": "string", "description": "Owner's user ID" },
+        "date": { "type": "string", "description": "Formatted date of the attempt" },
+        "timestamp": { "type": "object", "description": "Firestore server timestamp" },
+        "title": { "type": "string", "description": "Title of the quiz" },
+        "score": { "type": "integer", "description": "Number of correct answers" },
+        "total": { "type": "integer", "description": "Total number of questions" },
+        "percent": { "type": "string", "description": "Percentage score" },
+        "questions": { "type": "array", "description": "The questions that were in the quiz" },
+        "user": { "type": "string", "description": "Display name at time of attempt" },
+        "subject": { "type": "string", "description": "Subject of the quiz" }
+      },
+      "required": ["id", "uid", "score", "total", "timestamp"]
+    },
+    "leaderboard": {
+      "title": "Leaderboard Entry",
+      "description": "Public score for the global leaderboard.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User ID" },
+        "displayName": { "type": "string", "description": "User's display name" },
+        "score": { "type": "integer", "description": "User's best score" },
+        "timestamp": { "type": "object", "description": "When the score was achieved" }
+      },
+      "required": ["uid", "displayName", "score"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "users",
+      "description": "Private user profile data."
+    },
+    "/users/{userId}/history/{attemptId}": {
+      "schema": "history",
+      "description": "User's private quiz history."
+    },
+    "/leaderboard/{userId}": {
+      "schema": "leaderboard",
+      "description": "Public leaderboard entries."
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "QuizGenius Pro",
+  "description": "A professional quiz platform that converts raw text or JSON into interactive glassmorphism quizzes using AI.",
+  "requestFramePermissions": ["camera"]
+}
